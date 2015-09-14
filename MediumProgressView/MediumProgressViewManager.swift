@@ -20,7 +20,7 @@ public class MediumProgressViewManager {
     public var isLeftToRight: Bool
     public var duration: CFTimeInterval
     public var repeatCount: Float
-    public var window: UIWindow
+    //    public var window: UIWindow?
     public var progressView: MediumProgressView?
     
     init() {
@@ -30,9 +30,6 @@ public class MediumProgressViewManager {
         isLeftToRight = true
         duration = 2.0
         repeatCount = Float.infinity
-        
-        window = UIApplication.sharedApplication().keyWindow!
-        progressView = initializeViewWithFrame(window.frame)
     }
     
     public static let sharedInstance = MediumProgressViewManager()
@@ -40,6 +37,12 @@ public class MediumProgressViewManager {
     // MARK: function
     
     public func show() {
+        guard let window = UIApplication.sharedApplication().keyWindow else { return }
+        
+        if progressView == nil {
+            progressView = initializeViewWithFrame(window.frame)
+        }
+        
         if progressView?.superview == nil {
             window.addSubview(progressView!)
             progressView?.progressAnimation(isLeftToRight, duration: duration, repeatCount: repeatCount)
