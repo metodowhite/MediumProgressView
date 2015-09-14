@@ -14,33 +14,32 @@ protocol MediumProgressViewDelegate {
 
 public class MediumProgressView: UIView {
     var delegate: MediumProgressViewDelegate?
- 
+    
     override private init(frame: CGRect) {
         super.init(frame: frame)
     }
- 
+    
     convenience internal init(frame: CGRect,
-                      isLeftToRight: Bool,
-                           duration: CFTimeInterval,
-                        repeatCount: Float) {
-        self.init(frame: frame)
-        progressAnimation(isLeftToRight, duration: duration, repeatCount: repeatCount)
+        isLeftToRight: Bool,
+        duration: CFTimeInterval,
+        repeatCount: Float) {
+            self.init(frame: frame)
+            progressAnimation(isLeftToRight, duration: duration, repeatCount: repeatCount)
     }
-
-    required public init(coder aDecoder: NSCoder) {
+    
+    required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
- 
-    private func progressAnimation(isLeftToRight: Bool, duration: CFTimeInterval, repeatCount: Float) {
+    
+    public func progressAnimation(isLeftToRight: Bool, duration: CFTimeInterval, repeatCount: Float) {
         CATransaction.begin()
         CATransaction.setCompletionBlock{ [unowned self] in
-            let animation = self.layer.animationForKey("progressAnimation")
-            if animation != nil {
+            if let _ = self.layer.animationForKey("progressAnimation") {
                 self.layer.removeAnimationForKey("progressAnimation")
                 self.delegate?.finishedAnimation()
             }
         }
-
+        
         let animation: CABasicAnimation = CABasicAnimation(keyPath: "position.x")
         animation.fromValue           = isLeftToRight ? -frame.size.width : frame.size.width * 2
         animation.toValue             = isLeftToRight ? frame.size.width * 2 : -frame.size.width
@@ -50,5 +49,5 @@ public class MediumProgressView: UIView {
         animation.repeatCount         = repeatCount
         layer.addAnimation(animation, forKey: "progressAnimation")
         CATransaction.commit()
-    } 
+    }
 }

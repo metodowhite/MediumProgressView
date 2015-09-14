@@ -16,7 +16,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         progressViewManager = MediumProgressViewManager.sharedInstance
-        progressViewManager.show()
+//        progressViewManager.show()
     }
     
     @IBAction func startProgress(sender: AnyObject) {
