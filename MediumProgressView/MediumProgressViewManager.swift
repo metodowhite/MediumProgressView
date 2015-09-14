@@ -45,7 +45,6 @@ public class MediumProgressViewManager {
         
         if progressView?.superview == nil {
             window.addSubview(progressView!)
-            progressView?.progressAnimation(isLeftToRight, duration: duration, repeatCount: repeatCount)
         }
     }
     

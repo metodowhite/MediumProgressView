@@ -19,6 +19,12 @@ class ViewController: UIViewController {
 //        progressViewManager.show()
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        progressViewManager.show()
+    }
+    
     @IBAction func startProgress(sender: AnyObject) {
         progressViewManager.show()
     }
